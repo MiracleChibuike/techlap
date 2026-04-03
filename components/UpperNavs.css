@@ -1,0 +1,75 @@
+:root {
+  --black--main: rgba(0, 0, 0);
+  --semi-black: rgb(21, 18, 18);
+  --white-main: #fff;
+  --light-white: #e0d4d4;
+  --red-main: #a01111;
+  --semi-red: #9c1832;
+  --orange-main: #ffa500;
+  --orange-semi: #eed19a;
+  --gray-main: rgb(130, 130, 123);
+  --secondary-white: #f5f5f5;
+  --gray-secondary: rgb(132, 130, 130);
+}
+
+
+/* Upper navs style */
+/* contacts on top */
+.contactGlobal {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 50px;
+  background: var(--black--main);
+  color: var(--white-main);
+  height: 90px;
+  position: sticky;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 100;
+  /* box-shadow: 0 0 30px var(--black--main); */
+  /* margin: 15px 0; */
+}
+#contact-handles {
+  margin: 15px;
+}
+#contact-handles i {
+  padding: 10px;
+  font-size: 20px;
+}
+#contact-handles i:hover {
+  cursor: pointer;
+  background: var(--white-main);
+  color: var(--red-main);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: 0.5s ease;
+  transform: translateY(-10px);
+}
+#contacts-local {
+  margin: 15px;
+}
+#contacts-local i {
+  padding: 10px;
+}
+#contacts-local:hover {
+  cursor: pointer;
+}
+/*
+ .phone{
+    font-family: "Ubuntu", sans-serif
+} */
+#envelope,
+#phone,
+#clock {
+  font-size: 20px;
+}
+
+/* Media Query */
+@media screen and (min-width: 0) and (max-width: 761px) {
+     .contactGlobal {
+    display: none;
+  }
+
+}

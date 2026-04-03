@@ -1,0 +1,420 @@
+
+
+:root{
+     --black--main: rgba(0, 0, 0);
+  --semi-black: rgb(21, 18, 18);
+  --white-main: #fff;
+  --light-white: #e0d4d4;
+  --red-main: #a01111;
+  --semi-red: #9c1832;
+  --orange-main: #ffa500;
+  --orange-semi: #eed19a;
+  --gray-main: rgb(130, 130, 123);
+  --secondary-white: #f5f5f5;
+  --gray-secondary: rgb(132, 130, 130);
+  /* External Configs- Style */
+   --botanical-green: #7c8055;
+  --herbal-cream: #f6f4ef;
+  --muted-clay: #c46a4a;
+  --deep-charcoal: #2e2e2c;
+  --herbal-amber: #d8a84e;
+  --font-heading: "Cormorant Garamond", serif;
+  --font-body: "Inter", sans-serif;
+  --nav-background: rgba(246, 244, 239, 1);
+}
+
+.parent{
+    background: var(--herbal-cream) !important;
+}
+a{
+    color: rgba(217, 217, 217, 1);
+}
+
+a.active{
+    color: var(--herbal-cream);
+}
+.admin_container{
+    display: grid;
+    column-gap: 2rem;
+    transition: grid-template-columns 0.3s ease;
+    grid-template-columns: 250px 1fr;
+    grid-template-areas:
+        "sidePanelBar  mainPanelBar";
+}
+
+
+.sidePanel{
+    grid-area: sidePanelBar;
+    background: var(--muted-clay);
+    color: var(--herbal-cream);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.mainPanel{
+    grid-area: mainPanelBar;
+    background: #fff;
+    /* overflow-x: scroll; */
+}
+.upper_panel{
+    display: flex;
+    justify-content: space-between;
+}
+.adminDetails{}
+.notifications img{
+opacity: 1;
+border: 2px solid var(--botanical-green);
+border-radius: 2px;
+border-width: 0.39px;
+
+}
+.actions{
+    background: var(--botanical-green);
+    margin-top: auto;
+}
+#toggleSidebar{
+    display: none;
+}
+#searchAdmin{
+    padding: 10px 45px;
+    max-width: 325px;
+height: 38.13333511352539;
+opacity: 1;
+border-radius: 1.73px;
+border-width: 0.87px;
+border: 0.87px solid var(--muted-clay);
+outline: none;
+}
+#searchAdmin::placeholder{
+    color: var(--deep-charcoal);
+    font-size: small;
+}
+.links > div, .actions > div{
+    cursor: pointer;
+    transition: .3s ease;
+}
+.links > div:hover, .actions > div:hover{
+    transform: translateX(5px);
+    cursor: pointer;
+}
+.admin_container.collapsed{
+    grid-template-columns: 70px 1fr;
+}
+.admin_container.collapsed .links p, .admin_container.collapsed .actions p{
+    display: none;
+}
+
+.admin_container.collapsed .links p::before, .admin_container.collapsed .actions p::before{
+    font-size: 1.2rem;
+}
+.mobilePanel{
+    display: none;
+}
+.inactive{
+    color: rgba(217, 217, 217, 1);
+}
+.admin_Analytics h2{
+    font-weight: 700;
+    color: var(--deep-charcoal);
+    font-family: "Montserrat", "serif";
+    font-size: clamp(1.2rem, 3.5vw, 2rem);
+}
+.products_In_stock, .products_Out_stock, .new_consultations{
+    border-radius: 8px;
+    border: 1.5px solid var(--muted-clay);
+    transition: .2s ease-in-out;
+}
+.products_In_stock:hover, .products_Out_stock:hover, .new_consultations:hover{
+    background: var(--deep-charcoal);
+    color: var(--herbal-cream);
+    border: 1.5px solid var(--deep-charcoal);
+    cursor: pointer;
+    transform: rotate(2deg);
+}
+
+.Ikumi_analytics_insight_top{
+    display: flex;
+    gap: 30px 20px;
+    flex-wrap: wrap;
+    margin: 52px 0;
+    position: relative;
+    top: -10px;
+}
+/* Formulations Tab - Admin */
+.productsActions{
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    column-gap: 2em;
+    grid-template-areas:
+     "productsTable productForm";
+       margin: 52px 0;
+    position: relative;
+    top: -10px;
+}
+.productsTable, .productForm{
+     border: 1.5px solid var(--botanical-green);
+     border-radius: 8px;
+}
+.productsTable{
+    overflow-x: scroll;
+}
+#protocolSubmitBtn{
+    background: var(--herbal-amber);
+    color: var(--herbal-cream);
+    border-radius: 8px;
+}
+
+#addProduct{
+    position: relative;
+    left: 23px;
+}
+form label{
+    font-weight: bold;
+}
+.addPhoto{
+    background: var(--botanical-green);
+}
+form input::placeholder, form textarea::placeholder{
+    color: var(--herbal-cream);
+    font-size: small;
+}
+form select, form input, form textarea{
+    background: var(--botanical-green);
+    border-radius: 6px;
+    border: 0.75px solid rgba(196, 106, 74, 0.2);
+    color: var(--herbal-cream);
+    outline: none;
+    transition: .3s ease-in-out;
+    width: 100%;
+}
+.form select:focus, form input:focus, form textarea:focus{
+    /* background: transparent; */
+    border: 0.75px solid var(--botanical-green);
+    color: var(--herbal-cream);
+    box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    transform: translateY(5px);
+}
+form select option{
+    background: var(--herbal-cream);
+      color: var(--deep-charcoal)
+}
+form select option:hover{
+    background: var(--muted-clay);
+}
+#submit_Product_btn{
+    background: var(--herbal-amber);
+    width: 100%;
+}
+.displayTbale{
+    display: none;
+}
+.table-sm td, 
+.table-sm th {
+  padding: 0.25rem 0.4rem !important;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+/* Animation */
+.loaderProducts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.loader {
+    animation: rotate 1s infinite;
+    height: 50px;
+    width: 50px;
+  }
+
+  .loader:before,
+  .loader:after {
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 20px;
+    width: 20px;
+  }
+  .loader:before {
+    animation: ball1 1s infinite;
+    background-color: var(--herbal-amber);
+    box-shadow: 30px 0 0 #ff3d00;
+    margin-bottom: 10px;
+  }
+  .loader:after {
+    animation: ball2 1s infinite;
+    background-color: #ff3d00;
+    box-shadow: 30px 0 0 var(--herbal-amber);
+  }
+
+  @keyframes rotate {
+    0% { transform: rotate(0deg) scale(0.8) }
+    50% { transform: rotate(360deg) scale(1.2) }
+    100% { transform: rotate(720deg) scale(0.8) }
+  }
+
+  @keyframes ball1 {
+    0% {
+      box-shadow: 30px 0 0 var(--muted-clay);
+    }
+    50% {
+      box-shadow: 0 0 0 var(--muted-clay);
+      margin-bottom: 0;
+      transform: translate(15px, 15px);
+    }
+    100% {
+      box-shadow: 30px 0 0 var(--muted-clay);
+      margin-bottom: 10px;
+    }
+  }
+
+  @keyframes ball2 {
+    0% {
+      box-shadow: 30px 0 0 var(--herbal-amber);
+    }
+    50% {
+      box-shadow: 0 0 0 var(--herbal-amber);
+      margin-top: -20px;
+      transform: translate(15px, 15px);
+    }
+    100% {
+      box-shadow: 30px 0 0 var(--herbal-amber);
+      margin-top: 0;
+    }
+  }
+  
+
+  /* Protocols */
+  .protocols-Container{
+    position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  visibility: hidden;
+  /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* Always on top */
+  }
+  .protocols-Container.show{
+    visibility: visible;
+  }
+  .protocolTable{
+     background: var(--herbal-cream);
+  padding: 20px 30px;
+  border-radius: 10px;
+  height: 80vh;
+  max-width: 700px;
+  width: 90vw;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  color: var(--clr-conf-white);
+  overflow-y: scroll;
+  }
+  .action_products{
+    /* position: absolute; */
+    margin: 10px 0;
+    transition: 0.4s ease;
+  }
+@media screen and (min-width: 0) and (max-width: 800px) {
+ #toggleSidebar{
+    display: block;
+ }
+ .admin_container{
+    grid-template-columns: 1fr;
+    grid-template-areas: "mainPanelBar";
+    gap: 0;
+    column-gap: 0;
+ }
+ .mobilePanel{
+    display: block;
+    background: var(--muted-clay);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+ }
+ .sidePanel{
+    display: none;
+ }
+ .panelContainer{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 5px;
+}
+.panelContainer > div{
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+.panelContainer > div p{
+        font-size: small;
+}
+.panelContainer > div:hover{
+    transform: translateX(4px);
+}
+.child_text{
+    /* content-visibility: hidden; */
+}
+.parent_text:hover > .child_text{
+    content-visibility: visible;
+    font-weight: bold;
+     transition: top .4s ease;
+}
+#searchAdmin{
+    max-width: 90%;
+    /* left: -8px; */
+}
+.upper_panel{
+    padding: 14px 5px;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1.5em;
+}
+.adminDetails{
+    display: flex;
+    justify-content: center;
+}
+.admin_Analytics{
+    padding: 10px 30px;
+}
+.products_In_stock, .products_Out_stock, .new_consultations{
+    width: 100%;
+}
+
+/* Formulations -  */
+.productsActions{
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "productsTable"
+    "productForm";
+    row-gap: 2em;
+    /* background: var(--herbal-amber); */
+}
+/* .productForm, .productsTable{
+    width: 100%;
+} */
+#addProduct{
+    position: relative;
+    left: 0;
+}
+.protocolTable{
+   max-width: 98vw;
+    padding: 15px 5vw;
+}
+.protocolTable div form textarea{
+    width: 100%;
+}
+#table{
+    width: 100%;
+    overflow-x: scroll;
+}
+
+}

@@ -1,0 +1,225 @@
+:root {
+  --black--main: rgba(0, 0, 0);
+  --semi-black: rgb(21, 18, 18);
+  --white-main: #fff;
+  --light-white: #e0d4d4;
+  --red-main: #a01111;
+  --semi-red: #9c1832;
+  --orange-main: #ffa500;
+  --orange-semi: #eed19a;
+  --gray-main: rgb(130, 130, 123);
+  --secondary-white: #f5f5f5;
+  --gray-secondary: rgb(132, 130, 130);
+}
+
+/* main-nav */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 40px;
+  background: var(--black--main);
+  color: var(--white-main);
+}
+.logo {
+  font-family: "Odibee Sans", sans-serif;
+  letter-spacing: 2px;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+.logo span {
+  color: var(--orange-main);
+  font-size: 2.5rem;
+  font-family: "Odibee Sans", sans-serif;
+}
+/* MENU BAR */
+.menuIcon {
+  display: none;
+  margin: 15px 0;
+  /* background: var(--red-main); */
+}
+#showMenu{
+  font-size: 23px;
+  background: var(--semi-black);
+  padding: 5px;
+  border-radius: 5px;
+  /* border: 2px solid var(--orange-main); */
+  /* width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  padding: 5px 5px; */
+}
+#showMenu:hover,
+#hideMenu:hover {
+  cursor: pointer;
+  /* background: var(--gray-secondary); */
+  box-shadow: 0 0 10px var(--gray-secondary);
+  transition: all .3s ease;
+}
+
+/* NAVBAR */
+.navbar ul {
+  display: flex;
+  list-style-type: none;
+}
+.navbar ul li {
+  padding: 15px;
+}
+.navbar ul li a {
+  color: var(--white-main);
+  text-decoration: none;
+}
+.navbar ul li:hover {
+  border-bottom: 3px solid var(--orange-main);
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+.landing{
+    border-bottom: 3px solid var(--orange-main);
+      transition: 0.3s ease;
+      cursor: pointer;
+}
+
+.navbar ul li i {
+  color: var(--white-main);
+  padding: 0 10px;
+}
+.drop {
+  display: none;
+}
+.drop {
+  position: absolute;
+  width: 200px;
+  background: var(--white-main);
+  right: 170px;
+  top: 50px;
+  padding: 10px 5px;
+  transition: all 0.7s;
+  box-shadow: 0 0 20px var(--black--main);
+  border-radius: 4px;
+  display: none;
+  animation: navAnim 1s linear;
+}
+
+.navbar ul li:hover .drop {
+  display: block;
+}
+.drop ul {
+  display: block;
+  list-style-type: none;
+}
+.drop ul li a {
+  color: var(--black--main);
+  text-decoration: none;
+}
+.drop ul li {
+  padding: 10px;
+}
+.drop ul li:hover {
+  border-bottom: none;
+  border-left: 2px solid var(--black--main);
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+  transform: translateX(10px);
+  color: var(--orange-main);
+}
+/* pages more */
+#sign-upBTN {
+  padding: 8px 25px;
+  background: transparent;
+  color: var(--white-main);
+  border: 2px solid var(--white-main);
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+#sign-upBTN:hover {
+  color: var(--white-main);
+  border: 2px solid var(--orange-main);
+  background: var(--orange-main);
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 0) and (max-width: 760px) {
+     /* NavBar */
+  .nav{
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 70px;
+        padding: 10px 25px;
+        z-index: 100;
+        box-shadow: 0 0 45px var(--black--main);
+
+    }
+  .navbar {
+    /* display: none; */
+
+    position: absolute;
+    right: -90vw;
+    transition: right 0.3s ease-in-out;
+    top: 70px;
+    width: 80vw !important;
+    height: 100vh;
+    background: var(--black--main);
+    padding-bottom: 10px;
+    /* box-shadow: 0 0 30px var(--semi-black); */
+  }
+  .navbar.show{
+    right: 0;
+  }
+  .navbar ul {
+    display: block;
+  }
+  .navbar ul li {
+    margin-top: 10px;
+    padding: 25px;
+  }
+  /* Menu Bar */
+  .menuIcon {
+    display: block;
+  }
+  .navbar ul li:hover {
+    border-bottom: none;
+    background: var(--semi-black);
+    width: 240px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
+    transform: translateX(10px);
+    border-radius: 4px;
+  }
+  .drop {
+    display: none;
+    left: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 150px;
+  }
+
+  .drop ul {
+    display: block;
+    list-style-type: none;
+  }
+
+  .drop ul li a {
+    color: var(--black--main);
+    text-decoration: none;
+  }
+
+  .drop ul li {
+    padding: 10px 5px;
+  }
+  .drop ul li:hover {
+    border-bottom: none;
+    border-left: 2px solid var(--black--main);
+    background: transparent;
+    color: var(--white-main);
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
+    transform: translateX(10px);
+    border-radius: none;
+  }
+}
