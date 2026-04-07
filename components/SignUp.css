@@ -79,6 +79,11 @@ input[type="checkbox"]:checked::after {
     place-content: center;
     min-height: 50vh;
     padding: 25px 0;
+    background: var(--clr-white-bg);
+    /* display: none; */
+}
+.form_container > div input::placeholder{
+    color: var(--clr-dark-main);
 }
 .arrange{
     background: var(--clr-white-bg);
@@ -92,10 +97,17 @@ label{
     padding: 12px 20px;
     outline: none;
     transition: .3s ease-in-out;
+    background: transparent;
+    color: var(--clr-dark-main);
+}
+.email input::placeholder, .password input::placeholder{
+        color: #ccc;
+
 }
 .form_container div input:focus, .form_container div select:focus{
     transform: translateY(-5px);
     border: 1px solid var(--clr-dark-main);
+    color: var(--black--main);
 }
 .login button{
     width: 100%;
