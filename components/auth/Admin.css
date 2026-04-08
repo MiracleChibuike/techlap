@@ -22,7 +22,9 @@
   --font-body: "Inter", sans-serif;
   --nav-background: rgba(246, 244, 239, 1);
 }
-
+body{
+    background: var(--herbal-cream) !important;
+}
 .parent{
     background: var(--herbal-cream) !important;
     height: 100vh;
@@ -32,6 +34,9 @@ a{
 }
 
 a.active{
+    color: var(--herbal-cream);
+}
+.active{
     color: var(--herbal-cream);
 }
 .admin_container{
@@ -163,6 +168,38 @@ outline: none;
     background: var(--herbal-amber);
     color: var(--herbal-cream);
     border-radius: 8px;
+}
+.addProduct{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgb(10, 10, 10, 0.5), rgb(10, 10, 10, 0.5));
+    z-index: 1000;
+}
+.productBox{
+      background: var(--herbal-cream);
+  padding: 20px 30px;
+  border-radius: 10px;
+  height: 95vh;
+  max-width: 700px;
+  width: 90vw;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  color: var(--clr-conf-white);
+  overflow-y: scroll;
+}
+.send button{
+    width: 100%;
+    background: var(--muted-clay);
+    border-radius: 8px;
+    padding: 10px;
 }
 
 #addProduct{

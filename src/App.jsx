@@ -9,6 +9,7 @@ import SignUp from '../components/SignUp';
 import Dashboard from '../components/Dashboard';
 import Admin from '../components/auth/Admin';
 import SignUpAuth from '../components/auth/SignUpAuth';
+import Products from '../components/auth/Products';
 
 
 import './App.css'
@@ -27,6 +28,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="auth/admin" element={<Admin />} />
             <Route path="/auth/signUp" element={<SignUpAuth />} />
+            <Route path="/auth/products" element={<Products />} />
           </Routes>
         </BrowserRouter>
       </HelmetProvider>
