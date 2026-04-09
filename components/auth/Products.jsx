@@ -15,7 +15,7 @@ import {
   getDocs,
   getFirestore,
 } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -42,58 +42,129 @@ const Products = () => {
   const [isAdmin, setIsadmin] = useState("");
   const [adminExist, setAdminExist] = useState(false);
   const [addProducts, setAddProducts] = useState(false);
+  // const [wasLoggedIn, setWasLoggedIn] = useState(false);
   const showProductsIcon = useRef(null);
-  const hideProductsIcon = useRef(null)
+  const hideProductsIcon = useRef(null);
 
   // Call the Add Products
   useEffect(() => {
-    const showPicon = showProductsIcon.current
-         const showProductsBox = () => {
-          setAddProducts(true)
-         };
-         if (showPicon) {
-          showPicon.addEventListener("click", showProductsBox)
-         }
-         return () => {
-            if (showPicon) {
-              showPicon.removeEventListener("click", showProductsBox);
-            }
-         }
+    const showPicon = showProductsIcon.current;
+    const showProductsBox = () => {
+      setAddProducts(true);
+    };
+    if (showPicon) {
+      showPicon.addEventListener("click", showProductsBox);
+    }
+    return () => {
+      if (showPicon) {
+        showPicon.removeEventListener("click", showProductsBox);
+      }
+    };
   }, [addProducts]);
 
   useEffect(() => {
     const hideIcon = hideProductsIcon.current;
     const removeProductModal = () => {
-      setAddProducts(false)
+      setAddProducts(false);
     };
 
     if (hideIcon) {
-      hideIcon.addEventListener("click", removeProductModal)
-    };
+      hideIcon.addEventListener("click", removeProductModal);
+    }
 
     return () => {
       if (hideIcon) {
         hideIcon.removeEventListener("click", removeProductModal);
       }
-    }
-  }, [addProducts])
+    };
+  }, [addProducts]);
 
   // Create a function to fetch admin details
+  const [isInvalidAdmin, setIsInvalidAdmin] = useState(false);
+  const [signOutAuth, setSignOutAuth] = useState(false);
+
+  // Shared sign out logic
+  const handleSignOutLogic = () => {
+    setSignOutAuth(true); //show modal before the signOut Auth - A real note for me
+    signOut(auth);
+
+    setTimeout(() => {
+      navigate("/auth/signUp");
+    }, 3000); // shorter + cleaner UX
+  };
+
+  const detectInvalidAdmin = () => {
+    setIsInvalidAdmin(true);
+    setTimeout(() => {
+      setIsInvalidAdmin(false);
+    }, 6000);
+    // Route to sign In
+    setTimeout(() => {
+      navigate("/auth/signUp");
+    }, 6000);
+  };
   useEffect(() => {
-    const validateAdmin = () => {
-      onAuthStateChanged(auth, (user) => {
-        if (!user) {
-          console.warn(`No active user detected. Please sign Up`);
-          setAdminExist(false);
-          navigate("/auth/signUp");
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAdminExist(true);
+        setIsadmin(user.displayName);
+      } else {
+        setAdminExist(false);
+
+        // KEY PART: distinguish intent
+        if (signOutAuth) {
+          // User intentionally signed out
+          //  show sign-out UI
+          setSignOutAuth(true);
+          console.log("User signed out intentionally");
         } else {
-          // console.log(`${user.displayName}`);
-          setAdminExist(true);
-          setIsadmin(user.displayName);
+          // Unauthorized / session expired
+          detectInvalidAdmin();
         }
-      });
+      }
+    });
+
+    return () => unsubscribe();
+  }, [signOutAuth]);
+
+  // Sign Out
+  const signOutRef = useRef(null);
+  const mobileSignOutRef = useRef(null);
+  useEffect(() => {
+    const currentSignOutRef = signOutRef.current;
+    const hitSignOut = () => {
+      handleSignOutLogic();
     };
-    validateAdmin();
+
+    // call the fucntion
+    if (currentSignOutRef) {
+      currentSignOutRef.addEventListener("click", hitSignOut);
+    }
+    // clean Up Event Listener
+    return () => {
+      if (currentSignOutRef) {
+        currentSignOutRef.removeEventListener("click", hitSignOut);
+      }
+    };
+  });
+
+  // SignOut Mobile
+  useEffect(() => {
+    const currMobileRef = mobileSignOutRef.current;
+    const hitSignOut = () => {
+      handleSignOutLogic();
+    };
+
+    // call the fucntion
+    if (currMobileRef) {
+      currMobileRef.addEventListener("click", hitSignOut);
+    }
+    // clean Up Event Listener
+    return () => {
+      if (currMobileRef) {
+        currMobileRef.removeEventListener("click", hitSignOut);
+      }
+    };
   });
 
   return (
@@ -105,7 +176,54 @@ const Products = () => {
           content="Explore your products and, create, update and delete"
         />
       </Helmet>
-      <div className="parent">
+      <div className="parent" id="signUpparent">
+        {/* Sign  Out Modal*/}
+        {signOutAuth && (
+          <div className="outSign">
+            <div className="signOut p-3 shadow-lg m-4 rounded-2">
+              <div className="text-center">
+                <p className="mt-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="60px"
+                    viewBox="0 -960 960 960"
+                    width="60px"
+                    fill="#48752C">
+                    <path d="M422-297.33 704.67-580l-49.34-48.67L422-395.33l-118-118-48.67 48.66L422-297.33ZM480-80q-82.33 0-155.33-31.5-73-31.5-127.34-85.83Q143-251.67 111.5-324.67T80-480q0-83 31.5-156t85.83-127q54.34-54 127.34-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82.33-31.5 155.33-31.5 73-85.5 127.34Q709-143 636-111.5T480-80Zm0-66.67q139.33 0 236.33-97.33t97-236q0-139.33-97-236.33t-236.33-97q-138.67 0-236 97-97.33 97-97.33 236.33 0 138.67 97.33 236 97.33 97.33 236 97.33ZM480-480Z" />
+                  </svg>
+                </p>
+                <h3>Sign Out Successful</h3>
+                <p className="mt-2">
+                  Sign in whenever you wish to continue from where you stopped.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Invalid User */}
+        {isInvalidAdmin && (
+          <div className="invalid-user p-4">
+            <div className="invalid-modal shadow-lg border-1 rounded-2 p-3 bg-white">
+              <div className="">
+                <p className="text-center m-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="70px"
+                    viewBox="0 -960 960 960"
+                    width="70px"
+                    fill="#BB271A">
+                    <path d="M389.33-343.33 480-432l90.67 88.67L619.33-392l-90-88.67 90-89.33-48.66-48.67L480-530l-90.67-88.67L340.67-570l90 89.33-90 88.67 48.66 48.67ZM480-80.67q-139.67-35-229.83-161.5Q160-368.67 160-520.67v-240l320-120 320 120v240q0 152-90.17 278.5Q619.67-115.67 480-80.67Zm0-69.33q111.33-36.33 182.33-139.67 71-103.33 71-231v-193.66L480-809.67l-253.33 95.34v193.66q0 127.67 71 231Q368.67-186.33 480-150Zm0-330Z" />
+                  </svg>
+                </p>
+                <div className="mt-2 text-center">
+                  <h3>Oops! Access Denied</h3>
+                  You don’t have the right permissions to view this page. If you
+                  need access, please contact your administrator.
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="container">
           {/* Add Products */}
           {addProducts && (
@@ -116,7 +234,7 @@ const Products = () => {
                     <h2>Add a Product</h2>
                     <p>
                       <svg
-                      ref={hideProductsIcon}
+                        ref={hideProductsIcon}
                         xmlns="http://www.w3.org/2000/svg"
                         height="48px"
                         viewBox="0 -960 960 960"
@@ -372,7 +490,7 @@ const Products = () => {
                     <strong>Settings</strong>
                   </p>
                 </div>
-                <div className="d-flex gap-2 logOut">
+                <div className="d-flex gap-2 logOut" ref={signOutRef}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="24px"
@@ -610,7 +728,9 @@ const Products = () => {
                     <small>Settings</small>
                   </p>
                 </div>
-                <div className="text-center parent_text inactive logOut">
+                <div
+                  className="text-center parent_text inactive logOut"
+                  ref={mobileSignOutRef}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="24px"
@@ -630,6 +750,6 @@ const Products = () => {
       </div>
     </>
   );
-};
+};;
 
 export default Products;

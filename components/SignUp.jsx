@@ -121,7 +121,7 @@ const SignUp = () => {
 
     return (
       <>
-        <div className="parent">
+        <div className="parent" id="signUpparent">
           <div className="container">
             <div className="account_container">
               {/* <!-- Error Modal --> */}

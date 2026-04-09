@@ -22,12 +22,41 @@
   --font-body: "Inter", sans-serif;
   --nav-background: rgba(246, 244, 239, 1);
 }
-body{
+/* body{
     background: var(--herbal-cream) !important;
-}
+} */
 .parent{
     background: var(--herbal-cream) !important;
     height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+/* Unathourised user */
+.invalid-user{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+    background: rgb(10, 10, 10, 0.7);
+    display: grid;
+    place-content: center;
+}
+.invalid-modal{
+    border: 2px solid var(--herbal-cream);
+}
+/* Sign Out */
+.outSign{
+    display: grid;
+    place-content: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+    background: rgb(240, 240, 240);
 }
 a{
     color: rgba(217, 217, 217, 1);
@@ -119,6 +148,7 @@ outline: none;
 .inactive{
     color: rgba(217, 217, 217, 1);
 }
+
 .admin_Analytics h2{
     font-weight: 700;
     color: var(--deep-charcoal);
@@ -450,7 +480,8 @@ form select option:hover{
     justify-content: center;
 }
 .admin_Analytics{
-    padding: 10px 30px;
+     margin-bottom: 40px;
+    padding: 23px 30px;
 }
 .products_In_stock, .products_Out_stock, .new_consultations{
     width: 100%;

@@ -38,8 +38,12 @@ link{
 
 .parent{
     background: var(--clr-white-bg);
-    /* height: 100vh; */
+    height: 100vh;
     /* padding: 12px 0; */
+}
+#signUpparent{
+    height: 100vh;
+    overflow-y: scroll;
 }
 /* Custom Checkbox */
 input[type="checkbox"] {
@@ -92,7 +96,7 @@ label{
     font-weight: bold;
 }
 .form_container div input, .form_container div select{
-    border: 1px solid var(--clr-light-transparent);
+    border: 1px solid var(--gray-secondary);
     width:400px;
     padding: 12px 20px;
     outline: none;
