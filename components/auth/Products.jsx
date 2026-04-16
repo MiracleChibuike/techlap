@@ -4,7 +4,19 @@ import { Link, Links, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import "../auth/Admin.css";
 import Admin_bot from "../auth/admin/Admin_bot.svg";
+// Import open AI
+import OpenAI from "openai";
+const client = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
+// Create a message
+// const response = await client.responses.create({
+//   model: "gpt-5.4",
+//   input: "Generate about 5 paragraphs on securing visa sponsorship from Nigeria",
+// });
 
+// console.log(response.output_text);
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
