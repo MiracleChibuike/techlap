@@ -416,6 +416,15 @@ form select option:hover{
     margin: 10px 0;
     transition: 0.4s ease;
   }
+  .upload-success{
+    /* position: absolute; */
+     transition: left .3s ease-in-out;
+    /* left:-99vw; */
+    /* left: 25px; */
+  }
+  .upload-success.true{
+    left: 25px;
+  }
 @media screen and (min-width: 0) and (max-width: 800px) {
  #toggleSidebar{
     display: block;
@@ -443,7 +452,7 @@ form select option:hover{
     column-gap: 5px;
 }
 .panelContainer > div{
-    border-radius: 8px;
+    border-radius: 30px;
     transition: 0.3s ease-in-out;
     cursor: pointer;
 }
@@ -458,6 +467,10 @@ form select option:hover{
     content-visibility: visible;
     font-weight: bold;
      transition: top .4s ease;
+}
+.parent_text{
+    position: relative;
+    top: 5px;
 }
 #searchAdmin{
     max-width: 90%;

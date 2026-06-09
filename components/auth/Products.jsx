@@ -4,6 +4,7 @@ import { Link, Links, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import "../auth/Admin.css";
 import Admin_bot from "../auth/admin/Admin_bot.svg";
+import imagePrev from "../auth/admin/addPhoto.svg";
 // Import open AI
 import OpenAI from "openai";
 // const client = new OpenAI({
@@ -26,6 +27,8 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  addDoc,
+  collection,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -57,6 +60,10 @@ const Products = () => {
   // const [wasLoggedIn, setWasLoggedIn] = useState(false);
   const showProductsIcon = useRef(null);
   const hideProductsIcon = useRef(null);
+  const uploadSuccessRef = useRef(null);
+  const uploadErrorRef = useRef(null);
+  const [uploadError, setUploadError] = useState("");
+  const [uploadSuccessMessage, setUploadSuccessMessage] = useState("");
 
   // Call the Add Products
   useEffect(() => {
@@ -90,6 +97,96 @@ const Products = () => {
       }
     };
   }, [addProducts]);
+
+  // Set Image URL attribute
+  const productImageRef = useRef(null);
+  const viewImageRef = useRef(null);
+
+  // Handle file input change and preview
+  let globalURL = "";
+  const handleImageChange = (e) => {
+    const files = e.target.files[0];
+    if (files) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const imageSrc = event.target.result;
+        if (viewImageRef.current) {
+          const imgElement = viewImageRef.current.querySelector("img");
+          if (imgElement) {
+            imgElement.src = imageSrc;
+            globalURL = imageSrc;
+          }
+        }
+      };
+      reader.readAsDataURL(files);
+    }
+  };
+
+  // Trigger file input when preview is clicked
+  const handlePreviewClick = () => {
+    if (productImageRef.current) {
+      productImageRef.current.click();
+    }
+  };
+
+  const btnUploadRef = useRef(null);
+  const [isUploading, setIsUploading] = useState(false);
+  // Upload Products
+  const handleUploadProducts = async (event) => {
+    event.preventDefault();
+    try {
+      // clear previous errors and start uploading
+      setUploadError("");
+      setIsUploading(true);
+      const formData = new FormData(event.currentTarget);
+      const productDetails = Object.fromEntries(formData);
+      console.log(productDetails);
+
+      const productsRef = await addDoc(collection(db, "products"), {
+        ...productDetails,
+        imageURL: globalURL,
+        createdAt: serverTimestamp(),
+      });
+      const productID = productsRef.id;
+      setUploadSuccessMessage(
+        `Product with ID: ${productID} added successfully`,
+      );
+      console.log(`Added succesfully`);
+    } catch (error) {
+      console.log(error);
+      const message =
+        (error && (error.message || error.toString())) || "Upload failed";
+      setUploadError(message);
+      // make sure success message isn't shown when there's an error
+      setUploadSuccessMessage("");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!uploadSuccessMessage) return;
+    if (uploadSuccessRef.current) {
+      uploadSuccessRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    const t = setTimeout(() => {
+      setUploadSuccessMessage("");
+      setAddProducts(false);
+    }, 5000);
+    return () => clearTimeout(t);
+  }, [uploadSuccessMessage]);
+
+  // Return for error
+  useEffect(() => {
+    if (!uploadError) return;
+    if (uploadErrorRef.current) {
+      uploadErrorRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    const timer = setTimeout(() => {
+      setUploadError("");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [uploadError]);
 
   // Create a function to fetch admin details
   const [isInvalidAdmin, setIsInvalidAdmin] = useState(false);
@@ -242,6 +339,24 @@ const Products = () => {
             <div className="addProduct">
               <div className="productBox shadow-lg">
                 <div className="product_body_container">
+                  {/* Products Upload Success */}
+                  {uploadSuccessMessage && (
+                    <div
+                      ref={uploadSuccessRef}
+                      className="upload-success mb-3 text-white p-1 rounded-3 border-success border-2 text-bg-success ">
+                      <p className="success-msg-upload pt-2">
+                        {uploadSuccessMessage}
+                      </p>
+                    </div>
+                  )}
+                  {/* Error Upload */}
+                  {uploadError && (
+                    <div
+                      ref={uploadErrorRef}
+                      className="error-upload mb-3 text-white p-1 rounded-3 border-danger border-2 text-bg-danger ">
+                      <p className="error-upload-msg">{uploadError}</p>
+                    </div>
+                  )}
                   <div className="d-flex justify-content-between">
                     <h2>Add a Product</h2>
                     <p>
@@ -261,7 +376,7 @@ const Products = () => {
                     features
                   </p>
                   <div className="form-add-product">
-                    <form action="">
+                    <form action="" onSubmit={handleUploadProducts}>
                       <div className="p-name">
                         <label htmlFor="pName">Product Name</label>
                         <input
@@ -299,23 +414,25 @@ const Products = () => {
                       <div className="p-image mt-3">
                         <label htmlFor="pImage">Product Image</label>
                         <input
+                          ref={productImageRef}
                           type="file"
                           className="p-2"
                           placeholder="Enter product name"
                           id="pImage"
-                          name="productURL"
                           accept="image/*"
                           style={{ display: "none" }}
+                          onChange={handleImageChange}
                         />
-                        <div className="addPhoto p-2 rounded-1 d-flex justify-content-center">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="48px"
-                            viewBox="0 -960 960 960"
-                            width="48px"
-                            fill="#f1f1f1">
-                            <path d="M480-480ZM180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h365v60H180v600h600v-365h60v365q0 24-18 42t-42 18H180Zm60-162h480L576-474 449-307l-94-124-115 149Zm453-323v-87h-88v-60h88v-88h60v88h87v60h-87v87h-60Z" />
-                          </svg>{" "}
+                        <div
+                          className="addPhoto p-2 rounded-1 d-flex justify-content-center"
+                          ref={viewImageRef}
+                          onClick={handlePreviewClick}
+                          style={{ cursor: "pointer" }}>
+                          <img
+                            src={imagePrev}
+                            width={"100px"}
+                            alt="product image"
+                          />
                         </div>
                       </div>
                       {/* P-brand */}
@@ -399,8 +516,12 @@ const Products = () => {
                       </div>
                       {/* Price */}
                       <div className="send m-4">
-                        <button type="submit" className="border-0 text-white">
-                          Upload Now
+                        <button
+                          type="submit"
+                          className="border-0 text-white"
+                          ref={btnUploadRef}
+                          disabled={isUploading}>
+                          {isUploading ? "Uploading..." : "Upload Now"}
                         </button>
                       </div>
                     </form>
@@ -458,11 +579,11 @@ const Products = () => {
                     fill="#f6f6f6">
                     <path d="M160-160v-516L82-846l72-34 94 202h464l94-202 72 34-78 170v516H160Zm240-280h160q17 0 28.5-11.5T600-480q0-17-11.5-28.5T560-520H400q-17 0-28.5 11.5T360-480q0 17 11.5 28.5T400-440ZM240-240h480v-358H240v358Zm0 0v-358 358Z" />
                   </svg>
-                  <a href="/auth/oAuth/orders.html">
+                  <Link to={"/auth/orders"}>
                     <p className="mt-3">
                       <strong>Orders</strong>
                     </p>
-                  </a>
+                  </Link>
                 </div>
                 <div className="d-flex gap-2 inactive">
                   <svg
@@ -498,9 +619,11 @@ const Products = () => {
                     fill="#f6f6f6">
                     <path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
                   </svg>
-                  <p className="mt-3">
-                    <strong>Settings</strong>
-                  </p>
+                  <Link to={"/auth/settings"}>
+                    <p className="mt-3">
+                      <strong>Settings</strong>
+                    </p>
+                  </Link>
                 </div>
                 <div className="d-flex gap-2 logOut" ref={signOutRef}>
                   <svg
@@ -669,7 +792,7 @@ const Products = () => {
                         <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
                       </svg>
                     </p>
-                    <p class="text-center">
+                    <p className="text-center">
                       <strong>Add Product</strong>
                     </p>
                   </div>
@@ -698,19 +821,19 @@ const Products = () => {
                   </Link>
                 </div>
                 <div className="text-center parent_text inactive">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 -960 960 960"
-                    width="24px"
-                    fill="#f6f6f6">
-                    <path d="M160-160v-516L82-846l72-34 94 202h464l94-202 72 34-78 170v516H160Zm240-280h160q17 0 28.5-11.5T600-480q0-17-11.5-28.5T560-520H400q-17 0-28.5 11.5T360-480q0 17 11.5 28.5T400-440ZM240-240h480v-358H240v358Zm0 0v-358 358Z" />
-                  </svg>
-                  <a href="/auth//oAuth/orders.html">
+                  <Link to={"/auth/orders"}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 -960 960 960"
+                      width="24px"
+                      fill="#f6f6f6">
+                      <path d="M160-160v-516L82-846l72-34 94 202h464l94-202 72 34-78 170v516H160Zm240-280h160q17 0 28.5-11.5T600-480q0-17-11.5-28.5T560-520H400q-17 0-28.5 11.5T360-480q0 17 11.5 28.5T400-440ZM240-240h480v-358H240v358Zm0 0v-358 358Z" />
+                    </svg>
                     <p className="mt-1 child_text">
                       <small>Orders</small>
                     </p>
-                  </a>
+                  </Link>
                 </div>
                 <div className="text-center parent_text inactive">
                   <Link to={"/auth/products"}>
@@ -728,17 +851,21 @@ const Products = () => {
                   </Link>
                 </div>
                 <div className="text-center parent_text inactive">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 -960 960 960"
-                    width="24px"
-                    fill="#f6f6f6">
-                    <path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
-                  </svg>
-                  <p className="mt-1 child_text" style={{ fontWeight: "bold" }}>
-                    <small>Settings</small>
-                  </p>
+                  <Link to={"/auth/settings"}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 -960 960 960"
+                      width="24px"
+                      fill="#f6f6f6">
+                      <path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
+                    </svg>
+                    <p
+                      className="mt-1 child_text"
+                      style={{ fontWeight: "bold" }}>
+                      <small>Settings</small>
+                    </p>
+                  </Link>
                 </div>
                 <div
                   className="text-center parent_text inactive logOut"
@@ -762,6 +889,6 @@ const Products = () => {
       </div>
     </>
   );
-};;
+};
 
 export default Products;
