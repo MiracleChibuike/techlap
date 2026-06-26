@@ -399,6 +399,77 @@ const Products = () => {
                           name="product_id"
                         />
                       </div>
+                      {/* Category */}
+                      <div className="p-price mt-3">
+                        <label htmlFor="pPrice">Product Category</label>
+                        <input
+                          type="text"
+                          className="p-2"
+                          placeholder="Enter product category"
+                          id="pPrice"
+                          required
+                          name="product_category"
+                        />
+                      </div>
+                      {/* Ram */}
+                      <div className="p-price mt-3">
+                        <label htmlFor="pPrice">Product RAM</label>
+                        <input
+                          type="text"
+                          required
+                          className="p-2"
+                          placeholder="Enter product RAM (8gb)"
+                          id="pPrice"
+                          name="product-ram"
+                        />
+                      </div>
+                      {/* Storage */}
+                      <div className="p-price mt-3">
+                        <label htmlFor="pPrice">Storage</label>
+                        <input
+                          type="text"
+                          className="p-2"
+                          placeholder="Enter product storage (256gb SSD)"
+                          id="pPrice"
+                          required
+                          name="product_storage"
+                        />
+                      </div>
+                      {/* Product Condition */}
+                      <div className="p-price mt-3">
+                        <label htmlFor="pPrice">Condition</label>
+                        <input
+                          type="text"
+                          className="p-2"
+                          placeholder="Enter product condition (Brand New/Used)"
+                          id="pPrice"
+                          required
+                          name="product_condition"
+                        />
+                      </div>
+                      {/* Processor */}
+                      <div className="p-price mt-3">
+                        <label htmlFor="pPrice">Processor</label>
+                        <input
+                          type="text"
+                          className="p-2"
+                          placeholder="Enter product processor"
+                          id="pPrice"
+                          required
+                          name="product_processor"
+                        />
+                      </div>
+                      {/* Weight */}
+                      <div className="p-price mt-3">
+                        <label htmlFor="pPrice">Product Weight</label>
+                        <input
+                          type="number"
+                          className="p-2"
+                          placeholder="Enter product weight (kg)"
+                          id="pPrice"
+                          name="price_weight"
+                        />
+                      </div>
                       {/* Price */}
                       <div className="p-price mt-3">
                         <label htmlFor="pPrice">Product Price</label>
@@ -483,13 +554,35 @@ const Products = () => {
                       </div>
                       {/* CPU_Model */}
                       <div className="p-cpu-model mt-3">
-                        <label htmlFor="pCPUModel">CPU Model</label>
+                        <label htmlFor="pCPUModel">Operating System</label>
                         <input
                           type="text"
                           className="p-2"
-                          placeholder="Enter CPU Model"
+                          placeholder="Enter product OS"
                           id="pCPUModel"
-                          name="product_cpu_model"
+                          name="product_OS"
+                        />
+                      </div>
+                      {/* Graphics */}
+                      <div className="p-cpu-model mt-3">
+                        <label htmlFor="pCPUModel">Graphics</label>
+                        <input
+                          type="text"
+                          className="p-2"
+                          placeholder="Enter product Graphics"
+                          id="pCPUModel"
+                          name="product_graphics"
+                        />
+                      </div>
+                      {/* Battery Life */}
+                      <div className="p-cpu-model mt-3">
+                        <label htmlFor="pCPUModel">Battery Life</label>
+                        <input
+                          type="text"
+                          className="p-2"
+                          placeholder="Enter product battery life"
+                          id="pCPUModel"
+                          name="product_battery_life"
                         />
                       </div>
                       {/* Manufacturer */}
@@ -513,6 +606,15 @@ const Products = () => {
                           id="pGuarantee"
                           name="product_warantee"
                         />
+                      </div>
+                      {/* Description */}
+                      <div className="p-price mt-3">
+                        <label htmlFor="pPrice">Product Description</label>
+                        <textarea
+                          className="p-2"
+                          placeholder="Enter product price (₦)"
+                          id="pPrice"
+                          name="product_description"></textarea>
                       </div>
                       {/* Price */}
                       <div className="send m-4">
