@@ -15,6 +15,7 @@ import Settings from '../components/auth/Settings';
 
 import './App.css'
 import ProductsListing from '../components/ProductsListing';
+import ProductDetails from '../components/ProductDetails';
 
 function App() {
 
@@ -26,14 +27,18 @@ function App() {
           <Routes>
             <Route path="/navbar" element={<NavBar />} />
             <Route path="/" element={<Home />} />
-            <Route path='/product-listings' element={<ProductsListing />} />
+            <Route path="/product-listings" element={<ProductsListing />} />
+            <Route
+              path="/product-details/:productId"
+              element={<ProductDetails />}
+            />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="auth/admin" element={<Admin />} />
             <Route path="/auth/signUp" element={<SignUpAuth />} />
             <Route path="/auth/products" element={<Products />} />
             <Route path="/auth/orders" element={<Orders />} />
-            <Route path='/auth/settings' element={<Settings />} />
+            <Route path="/auth/settings" element={<Settings />} />
           </Routes>
         </BrowserRouter>
       </HelmetProvider>

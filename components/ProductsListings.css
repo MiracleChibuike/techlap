@@ -46,6 +46,11 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 2em;
 }
+.p-container-card{
+    background: var(--white-main);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.09);
+    border: 1px solid var(--light-white);
+}
 .faded-white{
     background: var(--light-white);
 }
@@ -56,12 +61,27 @@
     position: relative;
     top: 7px;
 }
+#f-details-btn{
+    transition: .3s ease;
+}
+#f-details-btn:hover{
+    transform: translateY(-2px);
+    background: var(--black--main) !important ;
+}
 
 #loaderProducts{
     display: grid;
     place-content: center;
     align-items: center;
     min-height: 50vh;
+}
+#price-tag{
+    background: var(--orange-semi);
+    font-weight: bold;
+    transition: .3s ease;
+}
+#price-tag:hover{
+    transform: scale(1.07);
 }
 /* Using Container Queries */
 @container p-card-container (width <= 1024px) and (width > 750px) {

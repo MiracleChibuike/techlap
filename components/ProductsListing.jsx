@@ -4,7 +4,7 @@ import sample_image from "../src/assets/sample-image/sample-image.avif";
 import rayzen_image from "../src/assets/sample-image/rayzen-sample.avif";
 import wifi_err from "../src/assets/sample-image/wifi-error.svg";
 import { React, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 // Firebase modules
@@ -39,52 +39,61 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const ProductsListing = () => {
-    const [products, setProducts] = useState([]); // Define States
-    const [loader, setLoader] = useState(false);
-    const [isError, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    useEffect(() => {
-      const renderProducts = async () => {
-        setLoader(true);
-          try {
-            const productsSnapShot = await getDocs(collection(db, "products"));
-            const productResults = productsSnapShot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            console.log(productResults, productResults.length);
-            setProducts(productResults);
-            if (!navigator.onLine) {
-                  setError(true);
-                  setErrorMessage(
-                    `
+  const [products, setProducts] = useState([]); // Define States
+  const [loader, setLoader] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    const renderProducts = async () => {
+      setLoader(true);
+      try {
+        const productsSnapShot = await getDocs(collection(db, "products"));
+        const productResults = productsSnapShot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        console.log(productResults, productResults.length);
+        setProducts(productResults);
+        if (!navigator.onLine) {
+          setError(true);
+          setErrorMessage(
+            `
                     ${wifi_err}
                     This typically indicates that your device does not have a healthy Internet connection at the moment. 
                     The client will operate in offline mode until it is able to successfully connect to the backend.
                     `,
-                  );
-            };
-
-            // Validation if no products are found
-            if (!productResults || productResults.length == 0) {
-                setError(true)
-                setErrorMessage(`Sorry, there aren't any products found at the moment.`)
-            }
-
-        } catch (err) {
-            console.log(err);
-            setError(true);
-            setErrorMessage(`Unable to fetch products at this time: ${String(err)}`);
-            setTimeout(() => {
-                setError(false);
-                setErrorMessage("");
-            }, 7000);
-        } finally {
-            setLoader(false);
+          );
         }
-      };
-      renderProducts();
-    }, []);
+
+        // Validation if no products are found
+        if (!productResults || productResults.length == 0) {
+          setError(true);
+          setErrorMessage(
+            `Sorry, there aren't any products found at the moment.`,
+          );
+        }
+      } catch (err) {
+        console.log(err);
+        setError(true);
+        setErrorMessage(
+          `Unable to fetch products at this time: ${String(err)}`,
+        );
+        setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 7000);
+      } finally {
+        setLoader(false);
+      }
+    };
+    renderProducts();
+  }, []);
+  // Achieving Easy Products Navigation using React (Clicking on buttons and redirecting -- using the product_id)
+  // STEP 1
+  const navigate = useNavigate(); // To handle navigation (also linked to the button on the card)
+  // STEP 2 -- Defining the Route <Component<> itself  `/product-details/:productId` in app component
+  //STEP 3; Using react useParams, define a hook eg productId and assign value: const {productId} = useparams();
+  // STEP 4: Then fetch using the params (see the `ProductDetails`) for example...
   return (
     <>
       <Helmet>
@@ -112,15 +121,19 @@ const ProductsListing = () => {
             </div>
           )}
           {/* Error */}
-         {isError && (
-             <div className="error-loading border-2 rounded" style={{display: "grid", placeContent: "center"}}>
-            <p className='text-danger'>{errorMessage}</p>
-          </div>
-         )}
+          {isError && (
+            <div
+              className="error-loading border-2 rounded"
+              style={{ display: "grid", placeContent: "center" }}>
+              <p className="text-danger">{errorMessage}</p>
+            </div>
+          )}
           <div className="p-container-holder-main ">
             <div className="p-holder">
               {products.map((product) => (
-                <div className="p-container-card" key={product.product_id}>
+                <div
+                  className="p-container-card rounded-4 p-3 mt-2"
+                  key={product.id}>
                   <div className="p-visual-image">
                     <img
                       style={{ width: "100%" }}
@@ -129,7 +142,7 @@ const ProductsListing = () => {
                       alt={product.product_name}
                     />
                   </div>
-                  <p className="text-center p-2">
+                  <p className="text-center">
                     <strong>Product Details</strong>
                   </p>
                   <div className="p-core-features">
@@ -192,7 +205,11 @@ const ProductsListing = () => {
                     </div>
                     <div className="btn-send-to-cart">
                       <button
+                        onClick={() =>
+                          navigate(`/product-details/${product.id}`)
+                        }
                         className="p-2 rounded-5 border-0 bg-dark text-white"
+                        id="f-details-btn"
                         style={{ width: "100%" }}>
                         See full details{" "}
                         <svg
