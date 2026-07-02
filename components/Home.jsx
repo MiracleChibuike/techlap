@@ -49,7 +49,7 @@ const Home = () => {
                 </button>
               </div>
               <Link to={"/auth/signUp"}>
-                <button>Admin</button>
+                {/* <button>Admin</button> */}
               </Link>
             </div>
           </section>
