@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./SignUp.css";
 import { Link, useNavigate } from "react-router-dom";
+import NavBar from "./Navbar";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -119,8 +120,11 @@ const SignUp = () => {
         };
     }, []);
 
+    const backNav = useNavigate();
+
     return (
       <>
+      {/* <NavBar /> */}
         <div className="parent" id="signUpparent">
           <div className="container">
             <div className="account_container">
@@ -142,7 +146,23 @@ const SignUp = () => {
                   <p className="message_success"> {signedInMessage} </p>
                 </div>
               )}
-              <div className="arrange p-2 rounded-4 ">
+              <div className="arrange p-2 rounded-4">
+                <div className="mb-3">
+                  <button
+                    onClick={() => backNav("/")}
+                    className="btn"
+                    style={{ outlineOffset: "none", outline: 'none', transition: '.4s ease' }}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 -960 960 960"
+                      width="24px"
+                      fill="#020202">
+                      <path d="M440-240 200-480l240-240 56 56-183 184 183 184-56 56Zm264 0L464-480l240-240 56 56-183 184 183 184-56 56Z" />
+                    </svg>{" "}
+                    Back
+                  </button>
+                </div>
                 <div className="headings text-center">
                   <h2 className="heading">Create Account</h2>
                   <p>

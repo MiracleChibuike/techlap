@@ -38,14 +38,14 @@ const Home = () => {
                   or create with ease.
                 </p>
               </div>
-              <div className="shop-cart">
-                <button id="shop-nowBtn">
+              <div className="shop-cart d-flex gap-4">
+                <button id="shop-nowBtn" className="btn text-white">
                   Shop Now{" "}
                   <i className="fa-solid fa-arrow-right-long shop-right"></i>
                 </button>
-                <button id="cartBtn">
+                <button id="cartBtn" className="btn">
                   <a href="#products">Add to Cart</a>{" "}
-                  <i className="fa-solid fa-cart-shopping cart-icon-add"></i>
+                  <i className="fa-solid fa-cart-shopping cart-icon-add text-white"></i>
                 </button>
               </div>
               <Link to={"/auth/signUp"}>

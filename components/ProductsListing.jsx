@@ -6,6 +6,7 @@ import wifi_err from "../src/assets/sample-image/wifi-error.svg";
 import { React, useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import NavBar from './Navbar';
 
 // Firebase modules
 import { initializeApp } from "firebase/app";
@@ -104,6 +105,7 @@ const ProductsListing = () => {
         />
       </Helmet>
       <div className="products-container">
+        <NavBar />
         <div className="products-heading">
           <h2
             className="text-center m-4"
