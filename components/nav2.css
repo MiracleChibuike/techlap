@@ -1,0 +1,83 @@
+@media screen and (min-width: 0) and (max-width: 760px) {
+     /* NavBar */
+  .nav{
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 70px;
+        padding: 10px 25px;
+        z-index: 100;
+        box-shadow: 0 0 45px var(--black--main);
+
+    }
+  .navbar {
+    /* display: none; */
+
+    position: absolute;
+    right: -90vw;
+    transition: right 0.3s ease-in-out;
+    top: 70px;
+    width: 80vw !important;
+    height: 100vh;
+    background: var(--black--main);
+    padding-bottom: 10px;
+    /* box-shadow: 0 0 30px var(--semi-black); */
+  }
+  .navbar.show{
+    right: 0;
+  }
+  .navbar ul {
+    display: block;
+  }
+  .navbar ul li {
+    margin-top: 10px;
+    padding: 25px;
+  }
+  /* Menu Bar */
+  .menuIcon {
+    display: block;
+  }
+  .navbar ul li:hover {
+    border-bottom: none;
+    background: var(--semi-black);
+    width: 240px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
+    transform: translateX(10px);
+    border-radius: 4px;
+  }
+  .drop {
+    display: none;
+    left: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 150px;
+  }
+
+  .drop ul {
+    display: block;
+    list-style-type: none;
+  }
+
+  .drop ul li a {
+    color: var(--black--main);
+    text-decoration: none;
+  }
+
+  .drop ul li {
+    padding: 10px 5px;
+  }
+  .drop ul li:hover {
+    border-bottom: none;
+    border-left: 2px solid var(--black--main);
+    background: transparent;
+    color: var(--white-main);
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
+    transform: translateX(10px);
+    border-radius: none;
+  }
+}

@@ -1,5 +1,9 @@
 :root {
-  --black--main: rgba(0, 0, 0);
+  
+
+
+:root{
+     --black--main: rgba(0, 0, 0);
   --semi-black: rgb(21, 18, 18);
   --white-main: #fff;
   --light-white: #e0d4d4;
@@ -10,6 +14,16 @@
   --gray-main: rgb(130, 130, 123);
   --secondary-white: #f5f5f5;
   --gray-secondary: rgb(132, 130, 130);
+  /* External Configs- Style */
+   --botanical-green: #7c8055;
+  --herbal-cream: #f6f4ef;
+  --muted-clay: #c46a4a;
+  --deep-charcoal: #2e2e2c;
+  --herbal-amber: #d8a84e;
+  --font-heading: "Cormorant Garamond", serif;
+  --font-body: "Inter", sans-serif;
+  --nav-background: rgba(246, 244, 239, 1);
+}
 }
 
 /* main-nav */
@@ -74,7 +88,7 @@
   cursor: pointer;
 }
 .landing{
-    border-bottom: 3px solid var(--orange-main);
+    /* border-bottom: 3px solid var(--orange-main); */
       transition: 0.3s ease;
       cursor: pointer;
 }
@@ -125,7 +139,7 @@
 }
 /* pages more */
 #sign-upBTN {
-  padding: 8px 25px;
+  padding: 4px 5px;
   background: transparent;
   color: var(--white-main);
   border: 2px solid var(--white-main);
@@ -139,87 +153,69 @@
   transition: 0.3s ease;
   cursor: pointer;
 }
+.mobile-navs{
+  display: none;
+}
 
 @media screen and (min-width: 0) and (max-width: 760px) {
+
+  .mobile-navs{
+    z-index: 100;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 1rem;
+    padding: 1px 5px;
+    background: var(--black--main);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* box-shadow:  0 0 45px var(--deep-charcoal); */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.09);
+    /* border-top: 0.55px solid var(--muted-clay); */
+    /* margin: 0 10px; */
+    /* border-radius: 30px; */
+  }
+  .mobile-navs button{
+    background: transparent;
+    border: none;
+    position: relative;
+    top: 9px;
+  }
+  .mobile-navs button p{
+    font-size: 0.7rem;
+  }
      /* NavBar */
   .nav{
+    display: none;
+       justify-content: center;
         position: fixed;
         left: 0;
         right: 0;
-        top: 0;
-        height: 70px;
-        padding: 10px 25px;
+        bottom: 0;
+        /* height: 70px; */
+        padding: 0;
+        /* padding: 10px 25px; */
         z-index: 100;
-        box-shadow: 0 0 45px var(--black--main);
+        box-shadow: 0 0 25px var(--black--main);
 
     }
-  .navbar {
-    /* display: none; */
-
-    position: absolute;
-    right: -90vw;
-    transition: right 0.3s ease-in-out;
-    top: 70px;
-    width: 80vw !important;
-    height: 100vh;
-    background: var(--black--main);
-    padding-bottom: 10px;
-    /* box-shadow: 0 0 30px var(--semi-black); */
-  }
-  .navbar.show{
-    right: 0;
-  }
-  .navbar ul {
-    display: block;
-  }
-  .navbar ul li {
-    margin-top: 10px;
-    padding: 25px;
-  }
+    /* .nav ul{
+      display: flex;
+      justify-content: flex-end;
+    } */
+    .nav ul li{
+      padding: 0;
+    }
+    .navbar ul {
+  display: flex;
+  justify-content: space-between;
+}
+    .navbar ul li:hover{
+      border-bottom: none;
+    }
+    .logo{
+      display: none;
+    }
   /* Menu Bar */
-  .menuIcon {
-    display: block;
-  }
-  .navbar ul li:hover {
-    border-bottom: none;
-    background: var(--semi-black);
-    width: 240px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s ease;
-    transform: translateX(10px);
-    border-radius: 4px;
-  }
-  .drop {
-    display: none;
-    left: 0;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: 150px;
-  }
-
-  .drop ul {
-    display: block;
-    list-style-type: none;
-  }
-
-  .drop ul li a {
-    color: var(--black--main);
-    text-decoration: none;
-  }
-
-  .drop ul li {
-    padding: 10px 5px;
-  }
-  .drop ul li:hover {
-    border-bottom: none;
-    border-left: 2px solid var(--black--main);
-    background: transparent;
-    color: var(--white-main);
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s ease;
-    transform: translateX(10px);
-    border-radius: none;
-  }
 }
