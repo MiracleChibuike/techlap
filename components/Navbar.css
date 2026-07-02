@@ -166,13 +166,14 @@
     background: rgba(20, 20, 30, 0.9);
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border-radius: 20px;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
-    box-shadow:  0 -4px 20px rgba(0, 0, 0, 0.25);
+    box-shadow:  0 -4px 20px rgba(0, 0, 0, 0.55);
     width: 100%;
     /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.09); */
     /* border-top: 0.55px solid var(--muted-clay); */
